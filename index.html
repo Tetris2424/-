@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西ヨーロッパ中世史 一問一答クイズ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            850: '#542609',
+                            900: '#78350f',
+                            950: '#451a03',
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .parchment-light {
+            background-color: #fcf8f2;
+            background-image: radial-gradient(#e5d9c5 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .parchment-dark {
+            background-color: #1a1614;
+            background-image: radial-gradient(#332923 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="parchment-light dark:parchment-dark text-slate-800 dark:text-amber-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <!-- Header -->
+    <header class="w-full bg-amber-900/90 dark:bg-zinc-900/90 text-amber-50 backdrop-blur border-b border-amber-700/50 p-4 shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center px-2">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid font-cinzel text-2xl text-amber-400 fa-shield-halved"></i>
+                <h1 class="font-cinzel text-xl sm:text-2xl font-bold tracking-wide text-amber-200">
+                    西洋中世史 <span class="text-sm font-sans font-normal text-amber-300 block sm:inline">一問一答マスター</span>
+                </h1>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full bg-amber-800/80 dark:bg-zinc-800 text-amber-200 hover:text-white hover:bg-amber-700 transition">
+                <i id="theme-toggle-dark-icon" class="fas font-solid fa-moon hidden"></i>
+                <i id="theme-toggle-light-icon" class="fas font-solid fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-3xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur rounded-2xl p-6 sm:p-10 shadow-xl border border-amber-900/10 dark:border-amber-500/20 text-center transition-all">
+            <div class="inline-block p-4 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 mb-4">
+                <i class="fa-solid fa-scroll text-4xl"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-3 text-amber-950 dark:text-amber-200">ローマ帝国分裂後の西ヨーロッパ</h2>
+            <p class="text-slate-600 dark:text-zinc-400 text-sm sm:text-base mb-8 max-w-lg mx-auto">
+                ゲルマン人の大移動からビザンツ帝国、教会政治、百年戦争まで、全50問の重要用語を一問一答形式で確認できます。
+            </p>
+
+            <div class="space-y-6">
+                <!-- Mode Selection -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-3">① 出題数の選択</label>
+                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
+                        <button type="button" data-count="10" class="mode-count-btn active p-3 rounded-xl border-2 border-amber-600 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold transition flex flex-col items-center">
+                            <span class="text-lg">10問</span>
+                            <span class="text-xs font-normal text-slate-500 dark:text-zinc-400">サクッと復習</span>
+                        </button>
+                        <button type="button" data-count="all" class="mode-count-btn p-3 rounded-xl border-2 border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-bold transition flex flex-col items-center">
+                            <span class="text-lg">全50問</span>
+                            <span class="text-xs font-normal text-slate-500 dark:text-zinc-400">完全攻略</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Type Selection -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-3">② 回答方式の選択</label>
+                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
+                        <button type="button" data-type="choice" class="mode-type-btn active p-3 rounded-xl border-2 border-amber-600 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold transition flex flex-col items-center">
+                            <i class="fa-solid fa-list-check mb-1"></i>
+                            <span>4択問題</span>
+                        </button>
+                        <button type="button" data-type="input" class="mode-type-btn p-3 rounded-xl border-2 border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-bold transition flex flex-col items-center">
+                            <i class="fa-solid fa-keyboard mb-1"></i>
+                            <span>記述入力</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <div class="pt-4">
+                    <button id="start-btn" class="w-full max-w-md bg-amber-700 hover:bg-amber-800 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform active:scale-95 transition text-lg flex items-center justify-center space-x-2 mx-auto">
+                        <span>クイズを開始する</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quiz-screen" class="hidden bg-white/80 dark:bg-zinc-900/80 backdrop-blur rounded-2xl p-6 sm:p-8 shadow-xl border border-amber-900/10 dark:border-amber-500/20 transition-all">
+            <!-- Progress Bar -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center text-xs sm:text-sm font-semibold text-amber-900 dark:text-amber-300 mb-2">
+                    <span id="question-number">第 1 問</span>
+                    <span id="score-live">正解数: 0</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-zinc-700 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-amber-600 h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="mb-6">
+                <span id="question-category" class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 mb-3">
+                    歴史用語
+                </span>
+                <h3 id="question-text" class="text-xl sm:text-2xl font-bold leading-relaxed text-slate-900 dark:text-zinc-100 min-h-[4rem] flex items-center">
+                    問題文がここに入ります。
+                </h3>
+            </div>
+
+            <!-- Answer Input / Options Container -->
+            <div id="answer-container" class="mb-6">
+                <!-- Choice Mode Container -->
+                <div id="choice-container" class="grid grid-cols-1 gap-3">
+                    <!-- Option Buttons dynamically inserted here -->
+                </div>
+
+                <!-- Input Mode Container -->
+                <div id="input-container" class="hidden space-y-3">
+                    <input type="text" id="text-answer-input" placeholder="解答を入力してください（ひらがな可）" class="w-full p-4 rounded-xl border-2 border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 focus:outline-none focus:border-amber-600 transition text-lg">
+                    <button id="submit-input-btn" class="w-full bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 rounded-xl transition">
+                        回答する
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feedback Box (Hidden initially) -->
+            <div id="feedback-box" class="hidden rounded-xl p-4 mb-6 transition-all">
+                <div class="flex items-center space-x-3 mb-2">
+                    <div id="feedback-icon-container" class="text-2xl"></div>
+                    <h4 id="feedback-result" class="text-lg font-bold">正解！</h4>
+                </div>
+                <p id="correct-answer-display" class="text-sm font-semibold mb-1"></p>
+                <p id="explanation-text" class="text-sm text-slate-700 dark:text-zinc-300 leading-relaxed"></p>
+            </div>
+
+            <!-- Next Button -->
+            <button id="next-btn" class="hidden w-full bg-slate-900 dark:bg-amber-600 hover:bg-slate-800 dark:hover:bg-amber-700 text-white font-bold py-3.5 rounded-xl transition shadow-md flex items-center justify-center space-x-2">
+                <span>次の問題へ</span>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="result-screen" class="hidden bg-white/80 dark:bg-zinc-900/80 backdrop-blur rounded-2xl p-6 sm:p-10 shadow-xl border border-amber-900/10 dark:border-amber-500/20 text-center transition-all">
+            <div class="inline-block p-4 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 mb-4">
+                <i class="fa-solid fa-trophy text-4xl"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-slate-900 dark:text-zinc-100">クイズ終了！</h2>
+            <p class="text-slate-600 dark:text-zinc-400 text-sm mb-6">お疲れ様でした。結果は以下の通りです。</p>
+
+            <div class="bg-amber-50 dark:bg-zinc-800/80 rounded-2xl p-6 mb-8 max-w-sm mx-auto border border-amber-200 dark:border-zinc-700">
+                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-400 mb-1">SCORE</div>
+                <div class="text-4xl sm:text-5xl font-extrabold text-amber-800 dark:text-amber-300 mb-2">
+                    <span id="final-score">0</span> / <span id="final-total">0</span>
+                </div>
+                <div id="score-percentage" class="text-sm font-semibold text-slate-600 dark:text-zinc-400">正解率 0%</div>
+                <div id="score-comment" class="mt-3 text-sm font-bold text-amber-900 dark:text-amber-200"></div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+                <button id="restart-btn" class="flex-1 bg-amber-700 hover:bg-amber-800 text-white font-bold py-3.5 px-6 rounded-xl shadow transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>もう一度挑戦</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 text-xs text-slate-500 dark:text-zinc-500">
+        &copy; 西ヨーロッパ中世史 一問一答 学習アプリ
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Quiz Database (50 Questions based on the document)
+        const quizDatabase = [
+            { id: 1, q: "476年に西ローマ帝国を滅ぼした、ゲルマン人の傭兵隊長は誰？", a: "オドアケル", kana: "おどあける", options: ["オドアケル", "テオドリック", "アッティラ", "クローヴィス"], cat: "大移動と西ローマ滅亡", exp: "ゲルマン人傭兵隊長のオドアケルによって西ローマ帝国は476年に滅亡しました。" },
+            { id: 2, q: "フランク王国のメロヴィング朝を開き、アタナシウス派に改宗した人物は誰？", a: "クローヴィス", kana: "くろーゔぃす", options: ["クローヴィス", "カール＝マルテル", "ピピン", "カール大帝"], cat: "フランク王国", exp: "クローヴィスはアタナシウス派（正統派）に改宗し、ローマ教会との結びつきを強めました。" },
+            { id: 3, q: "732年にフランク王国がウマイヤ朝の侵入を撃退した戦いは何？", a: "トゥール＝ポワティエ間の戦い", kana: "とぅーるぽわてぃえかんのたたかい", options: ["トゥール＝ポワティエ間の戦い", "カタラウヌムの戦い", "レヒフェルトの戦い", "カノッサの屈辱"], cat: "フランク王国", exp: "宮宰カール＝マルテルがウマイヤ朝を撃退し、西欧キリスト教世界を守りました。" },
+            { id: 4, q: "ビザンツ皇帝ユスティニアヌスの命で『ローマ法大全』の編纂を中心となって進めた法学者は誰？", a: "トリボニアヌス", kana: "とりぼにあぬす", options: ["トリボニアヌス", "アルクイン", "ウケレス", "アンセルムス"], cat: "ビザンツ帝国", exp: "ユスティニアヌス帝の命令でトリボニアヌスらが『ローマ法大全』を編纂しました。" },
+            { id: 5, q: "荘園制において、領主が国王の役人の立ち入りや課税を拒否できる権利は何？", a: "不輸不入権", kana: "ふゆふにゅうけん", options: ["不輸不入権", "領主裁判権", "聖職叙任権", "単独相続権"], cat: "西ヨーロッパの社会", exp: "インムニテートとも呼ばれ、領主の自立性を高め封建社会を強化しました。" },
+            { id: 6, q: "1077年、聖職叙任権闘争において皇帝ハインリヒ4世が教皇に許しを請うた事件は何？", a: "カノッサの屈辱", kana: "かのっさのくつじょく", options: ["カノッサの屈辱", "アナーニ事件", "ヴォルムス協約", "コンスタンツ公会議"], cat: "教会と叙任権", exp: "教皇グレゴリウス7世に破門された皇帝ハインリヒ4世が、カノッサ城で許しを乞うた事件です。" },
+            { id: 7, q: "1095年、教皇ウルバヌス2世が聖地回復のための十字軍を提唱した会議は何？", a: "クレルモン宗教会議", kana: "くれるもんしゅうきょうかいぎ", options: ["クレルモン宗教会議", "コンスタンツ公会議", "ヴォルムス協約", "トリエント公会議"], cat: "十字軍", exp: "ウルバヌス2世はこの会議で聖地エルサレム奪還の第一回十字軍を呼びかけました。" },
+            { id: 8, q: "1302年、フランス王フィリップ4世が教会課税問題で支持を得るため初招集した議会は何？", a: "三部会", kana: "さんぶかい", options: ["三部会", "模範議会", "一院制議会", "元老院"], cat: "英仏の君主制", exp: "聖職者・貴族・市民の3身分からなる議会で、王権強化の足がかりとなりました。" },
+            { id: 9, q: "1356年に神聖ローマ皇帝カール4世が発布し、7人の選帝侯による皇帝選出を定めた勅書は何？", a: "金印勅書", kana: "きんいんちょくしょ", options: ["金印勅書", "ヴォルムス協約", "大憲章", "ミラノ勅令"], cat: "ドイツとイタリア", exp: "金印勅書（カルトラ＝アウレア）により神聖ローマ帝国の領邦化が決定づけられました。" },
+            { id: 10, q: "12〜15世紀に普及した、高く尖った塔やステンドグラスを特徴とする建築様式は何？", a: "ゴシック様式", kana: "ごしっくようしき", options: ["ゴシック様式", "ロマネスク様式", "ビザンツ様式", "バロック様式"], cat: "中世文化", exp: "ノートルダム大聖堂やケルン大聖堂などに代表される、尖頭アーチと大きな窓が特徴です。" },
+            { id: 11, q: "古代ローマの歴史家タキトゥスがゲルマン人の風習について記録した著書は何？", a: "『ゲルマニア』", kana: "げるまにあ", options: ["『ゲルマニア』", "『ガリア戦記』", "『神学大全』", "『ローマ法大全』"], cat: "大移動と西ローマ滅亡", exp: "カエサルの『ガリア戦記』と並び、古代ゲルマン人の貴重な歴史史料です。" },
+            { id: 12, q: "451年、西ローマとゲルマン人の連合軍がアッティラ率いるフン人を破った戦いは何？", a: "カタラウヌムの戦い", kana: "かたらうぬむのたたかい", options: ["カタラウヌムの戦い", "トゥール＝ポワティエ間の戦い", "レヒフェルトの戦い", "カンナエの戦い"], cat: "大移動と西ローマ滅亡", exp: "フン人の西進を食い止めた重要な戦いです。" },
+            { id: 13, q: "イタリアに東ゴート王国を建国し、オドアケルの国を滅ぼした王は誰？", a: "テオドリック", kana: "ておどりっく", options: ["テオドリック", "オドアケル", "ロロ", "ルッジェーロ2世"], cat: "大移動と西ローマ滅亡", exp: "ラヴェンナを首都として東ゴート王国を栄えさせました。" },
+            { id: 14, q: "ビザンツ帝国の首都で、かつてビザンティウムと呼ばれた都市はどこ？", a: "コンスタンティノープル", kana: "こんすたんてぃのーぷる", options: ["コンスタンティノープル", "ローマ", "アレクサンドリア", "アテネ"], cat: "ビザンツ帝国", exp: "現在はイスタンブールと呼ばれる、東西交易の中心地です。" },
+            { id: 15, q: "6世紀にビザンツ帝国の最盛期を築き、旧ローマ帝国の領土を一時回復した皇帝は誰？", a: "ユスティニアヌス", kana: "ゆすてぃにあぬす", options: ["ユスティニアヌス", "レオン3世", "アレクシオス1世", "コンスタンティヌス"], cat: "ビザンツ帝国", exp: "外征で領土を広げ、内政では『ローマ法大全』やハギア＝ソフィア聖堂を作りました。" },
+            { id: 16, q: "ユスティニアヌス帝がビザンツ帝国の首都に建設した大聖堂は何？", a: "ハギア＝ソフィア", kana: "はぎあそふぃあ", options: ["ハギア＝ソフィア", "サン＝ヴィターレ", "ピサ大聖堂", "シャルトル大聖堂"], cat: "ビザンツ帝国", exp: "大ドーム構造を持つビザンツ建築の最高傑作です。" },
+            { id: 17, q: "7世紀のビザンツ帝国で導入された、帝国を軍管区に分けた統治制度は何？", a: "軍管区制", kana: "ぐんかんくせい", options: ["軍管区制", "プロノイア制", "恩貸地制", "従士制"], cat: "ビザンツ帝国", exp: "テマ制とも呼ばれ、司令官に軍事・行政権を与え、屯田兵制とセットで運用されました。" },
+            { id: 18, q: "11世紀のビザンツ帝国で導入された、貴族に軍事奉仕と引き換えに土地管理権を与えた制度は何？", a: "プロノイア制", kana: "ぷろのいあせい", options: ["プロノイア制", "軍管区制", "荘園制", "騎士制"], cat: "ビザンツ帝国", exp: "ビザンツ版の封建制度ともいえる制度で、中央集権の弱体化を招きました。" },
+            { id: 19, q: "ギリシア正教会で重要視された、キリストや聖母などを描いた聖画像は何？", a: "イコン", kana: "いこん", options: ["イコン", "モザイク", "ステンドグラス", "フレスコ"], cat: "ビザンツ帝国", exp: "聖像禁止令をめぐってローマ教会と対立する原因となりました。" },
+            { id: 20, q: "9世紀にノヴゴロド国を建てたスウェーデン系ノルマン人の首領は誰？", a: "リューリク", kana: "りゅーりく", options: ["リューリク", "バトゥ", "ロロ", "ウラディミル1世"], cat: "東スラブとロシア", exp: "リューリク朝を開き、後のロシアの国家形成の祖となりました。" },
+            { id: 21, q: "キエフ公国の最盛期を築き、ギリシア正教を国教化した君主は誰？", a: "ウラディミル1世", kana: "うらでぃみるいっせい", options: ["ウラディミル1世", "イヴァン3世", "イヴァン4世", "リューリク"], cat: "東スラブとロシア", exp: "ビザンツ帝国皇帝の妹と結婚し、ギリシア正教を受容しました。" },
+            { id: 22, q: "13世紀にロシアを侵略・服属させ「タタールのくびき」をもたらしたモンゴルの将軍は誰？", a: "バトゥ", kana: "ばとぅ", options: ["バトゥ", "チンギス＝ハン", "フラグ", "クビライ"], cat: "東スラブとロシア", exp: "キプチャク＝ハン国を建国し、約200年間にわたりロシアを支配しました。" },
+            { id: 23, q: "15世紀末にモンゴルから独立し、ツァーリの称号を用いたモスクワ大公は誰？", a: "イヴァン3世", kana: "いゔぁんさんせい", options: ["イヴァン3世", "イヴァン4世", "ウラディミル1世", "ピョートル1世"], cat: "東スラブとロシア", exp: "ビザンツ皇帝の姪と結婚し、モスクワを「第三のローマ」と自任しました。" },
+            { id: 24, q: "「雷帝」と呼ばれ、16世紀にツァーリの権力を強固にしたモスクワ大公は誰？", a: "イヴァン4世", kana: "いゔぁんよんせい", options: ["イヴァン4世", "イヴァン3世", "バトゥ", "ニコライ1世"], cat: "東スラブとロシア", exp: "貴族を抑え込んで専制政治（ツァーリズム）を確立しました。" },
+            { id: 25, q: "14世紀末、ポーランドと合同してリトアニア＝ポーランド王国を結成した朝代は何？", a: "ヤゲウォー朝", kana: "やげうぉーちょう", options: ["ヤゲウォー朝", "ピースト朝", "ルリューリク朝", "ハプスブルク朝"], cat: "東ヨーロッパ", exp: "タンネンベルクの戦いでドイツ騎士団を破るなど発展しました。" },
+            { id: 26, q: "西スラブ人のチェック人が建国し、11世紀に神聖ローマ帝国に編入された国は何？", a: "ベーメン", kana: "べーめん", options: ["ベーメン", "ポーランド", "ハンガリー", "セルビア"], cat: "東ヨーロッパ", exp: "ボヘミアとも呼ばれ、中心都市はプラハです。" },
+            { id: 27, q: "10世紀にアジア系マジャール人がパンノニアに建国した王国は何？", a: "ハンガリー王国", kana: "はんがりーおうこく", options: ["ハンガリー王国", "ブルガリア王国", "セルビア王国", "ルーマニア王国"], cat: "東ヨーロッパ", exp: "オットー1世に敗れた後、カトリックを受容して王国を形成しました。" },
+            { id: 28, q: "529年、ベネディクトゥスが「祈り、働け」をモットーに設立したイタリアの修道院はどこ？", a: "モンテ＝カシノ", kana: "もんてかしの", options: ["モンテ＝カシノ", "クリュニー", "シトー", "シャルトル"], cat: "教会と修道院", exp: "西欧修道院運動の発祥の地となりました。" },
+            { id: 29, q: "726年にビザンツ皇帝レオン3世が発布し、東西教会の対立を深めた法令は何？", a: "聖像禁止令", kana: "せいぞうきんしれい", options: ["聖像禁止令", "ヴォルムス協約", "ミラノ勅令", "ニケーア公会議"], cat: "教会と叙任権", exp: "ゲルマン布教に聖像を使っていたローマ教会が強く反発しました。" },
+            { id: 30, q: "カロリング朝の創始者で、教皇にラヴェンナ地方を寄進（ピピンの寄進）した人物は誰？", a: "ピピン", kana: "ぴぴん", options: ["ピピン", "カール＝マルテル", "クローヴィス", "カール大帝"], cat: "フランク王国", exp: "この寄進によってローマ教皇領がスタートしました。" },
+            { id: 31, q: "800年のクリスマスに教皇レオ3世からローマ皇帝の冠を授けられたフランク王は誰？", a: "カール大帝", kana: "かーるたいてい", options: ["カール大帝", "ピピン", "オットー1世", "ユーグ＝カペー"], cat: "フランク王国", exp: "西ローマ帝国の復活を意味し、西欧中世世界が成立しました。" },
+            { id: 32, q: "カール大帝がアルクインらを招いて展開した、古代文化の復興運動は何？", a: "カロリング＝ルネサンス", kana: "かろりんぐるねさんす", options: ["カロリング＝ルネサンス", "12世紀ルネサンス", "文芸復興", "スコラ学"], cat: "中世文化", exp: "ラテン語文書の復興やカロリング小字体などの文字改革が進みました。" },
+            { id: 33, q: "843年、カール大帝の没後にフランク王国を3分割した条約は何？", a: "ヴェルダン条約", kana: "ゔぇるだんじょうやく", options: ["ヴェルダン条約", "メルセン条約", "ヴォルムス協約", "カノッサの屈辱"], cat: "フランク王国", exp: "その後870年のメルセン条約と合わせて独・仏・伊の原形ができました。" },
+            { id: 34, q: "987年に西フランク王国でカロリング家が断絶した後、新王朝を開いたパリ伯は誰？", a: "ユーグ＝カペー", kana: "ゆーぐかぺー", options: ["ユーグ＝カペー", "フィリップ2世", "ルイ9世", "シャルル7世"], cat: "英仏の君主制", exp: "フランス王国のカペー朝を開きました。" },
+            { id: 35, q: "962年に教皇ヨハネス12世から戴冠を受け、神聖ローマ帝国を開いた東フランク王は誰？", a: "オットー1世", kana: "おっとーいっせい", options: ["オットー1世", "カール4世", "ハインリヒ4世", "フリードリヒ2世"], cat: "ドイツとイタリア", exp: "マジャール人をレヒフェルトの戦いで破った実績を持ちます。" },
+            { id: 36, q: "911年に北フランスに侵入し、ノルマンディー公国を建てたノルマン人の首領は誰？", a: "ロロ", kana: "ろろ", options: ["ロロ", "リューリク", "クヌート", "ウィリアム"], cat: "ノルマン人", exp: "西フランク国王から封土を得て公国を建てました。" },
+            { id: 37, q: "9世紀末、イングランドでデーン人（ノルマン人）の侵入を一時撃退したアングロ＝サクソン王は誰？", a: "アルフレッド大王", kana: "あるふれっどたいたい", options: ["アルフレッド大王", "エグバート", "クヌート", "ウィリアム1世"], cat: "ノルマン人", exp: "学問の振興や海軍の創設などでも知られます。" },
+            { id: 38, q: "1016年にイングランドを征服し、北海大帝国を築いたデーン人の王は誰？", a: "クヌート", kana: "くぬーと", options: ["クヌート", "アルフレッド大王", "ロロ", "ヘンリ2世"], cat: "ノルマン人", exp: "イングランド、デンマーク、ノルウェーを治めました。" },
+            { id: 39, q: "1066年、ノルマンディー公ウィリアムがイングランドを征服しノルマン朝を開いた出来事は何？", a: "ノルマン＝コンクェスト", kana: "のるまんこんくぇすと", options: ["ノルマン＝コンクェスト", "バラ戦争", "ワットタイラーの乱", "東方移民"], cat: "ノルマン人", exp: "ウィリアム1世として即位し、強力な王権を確立しました。" },
+            { id: 40, q: "1130年、南イタリアとシチリア島を統合して建てられたノルマン系の国は何？", a: "両シチリア王国", kana: "りょうしちりあおうこく", options: ["両シチリア王国", "イタリア王国", "ヴェネツィア共和国", "教皇領"], cat: "ノルマン人", exp: "ルッジェーロ2世が建国し、地中海文化の融合点となりました。" },
+            { id: 41, q: "中世の農地経営で、春耕地・秋耕地・休耕地に3分割して1年ごとに循環させる農法は何？", a: "三圃制", kana: "さんぽせい", options: ["三圃制", "二圃制", "屯田制", "穀物輪作"], cat: "西ヨーロッパの社会", exp: "重量有輪犂の使用とともに農業生産量を著しく向上させました。" },
+            { id: 42, q: "1122年に結ばれ、聖職叙任権が教会側にあることを認めて叙任権闘争を収束させた協約は何？", a: "ヴォルムス協約", kana: "ゔぉるむすきょうやく", options: ["ヴォルムス協約", "ヴェルダン条約", "メルセン条約", "ウェストファリア条約"], cat: "教会と叙任権", exp: "教皇カリクストゥス2世と皇帝ハインリヒ5世の間で結ばれました。" },
+            { id: 43, q: "1202年の第4回十字軍がビザンツ帝国の首都を占領して建てたラテン系国家は何？", a: "ラテン帝国", kana: "らてんていこく", options: ["ラテン帝国", "エルサレム王国", "ビザンツ帝国", "イェルサレム総主教領"], cat: "十字軍", exp: "ヴェネツィア商人の思惑により目的地を変更して攻撃しました。" },
+            { id: 44, q: "北ドイツのバルト海沿岸都市で構成された「ハンザ同盟」の盟主都市はどこ？", a: "リューベック", kana: "りゅーべっく", options: ["リューベック", "ハンブルク", "ブレーメン", "ダンツィヒ"], cat: "都市の発達", exp: "「ハンザの女王」と呼ばれ商業ネットワークを主導しました。" },
+            { id: 45, q: "1358年、ペスト流行や百年戦争の重税に苦しむフランス農民が起こした反乱は何？", a: "ジャックリーの乱", kana: "じゃっくりーのらん", options: ["ジャックリーの乱", "ワット＝タイラーの乱", "フス戦争", "ツンフト闘争"], cat: "封建社会の衰退", exp: "北フランスで発生した大規模な農民一揆です。" },
+            { id: 46, q: "1381年、イギリスでジョン＝ボールらの説教に刺激されて起きた農民反乱は何？", a: "ワット＝タイラーの乱", kana: "わっとたいらーのらん", options: ["ワット＝タイラーの乱", "ジャックリーの乱", "バラ戦争", "シーニュの反乱"], cat: "封建社会の衰退", exp: "「アダムが耕しエバが紡いだとき誰が貴族であったか」のスローガンで有名です。" },
+            { id: 47, q: "1303年、フランス王フィリップ4世が教皇ボニファティウス8世を拘束・幽閉した事件は何？", a: "アナーニ事件", kana: "あなーにじけん", options: ["アナーニ事件", "カノッサの屈辱", "バビロン捕囚", "コンスタンツ公会議"], cat: "教会の衰退", exp: "捕囚から釈放された教皇は直後に憤死し、教皇権の衰退を象徴しました。" },
+            { id: 48, q: "1215年、失政を繰り返すジョン王に貴族層が課税の制限などを約束させた文書は何？", a: "大憲章", kana: "だいけんしょう", options: ["大憲章", "権利の承認", "金印勅書", "ヴォルムス協約"], cat: "英仏の君主制", exp: "マグナ＝カルタとも呼ばれ、立憲政治の基礎となりました。" },
+            { id: 49, q: "百年戦争後半、オルレアンの包囲を破りフランスの旗色を逆転させた聖少女は誰？", a: "ジャンヌ＝ダルク", kana: "じゃんぬだるく", options: ["ジャンヌ＝ダルク", "イサベル", "マルグレーテ", "プレザンス"], cat: "英仏の君主制", exp: "シャルル7世の戴冠に貢献しましたが、後に捕らえられ火刑となりました。" },
+            { id: 50, q: "1455〜1485年にイングランドで王位継承権をめぐりランカスター家とヨーク家が争った内戦は何？", a: "バラ戦争", kana: "ばらせんそう", options: ["バラ戦争", "百年戦争", "フス戦争", "三十年戦争"], cat: "英仏の君主制", exp: "最終的にヘンリ7世が収束させ、テューダー朝を開きました。" }
+        ];
+
+        // State Management
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let selectedCount = '10';
+        let selectedType = 'choice';
+        let isAnswered = false;
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+
+        const countBtns = document.querySelectorAll('.mode-count-btn');
+        const typeBtns = document.querySelectorAll('.mode-type-btn');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const questionNumberEl = document.getElementById('question-number');
+        const scoreLiveEl = document.getElementById('score-live');
+        const progressBar = document.getElementById('progress-bar');
+        const categoryEl = document.getElementById('question-category');
+        const questionTextEl = document.getElementById('question-text');
+
+        const choiceContainer = document.getElementById('choice-container');
+        const inputContainer = document.getElementById('input-container');
+        const textAnswerInput = document.getElementById('text-answer-input');
+        const submitInputBtn = document.getElementById('submit-input-btn');
+
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackIconContainer = document.getElementById('feedback-icon-container');
+        const feedbackResult = document.getElementById('feedback-result');
+        const correctAnswerDisplay = document.getElementById('correct-answer-display');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+
+        const finalScoreEl = document.getElementById('final-score');
+        const finalTotalEl = document.getElementById('final-total');
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const scoreCommentEl = document.getElementById('score-comment');
+
+        // Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            darkIcon.classList.remove('hidden');
+            lightIcon.classList.add('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+        });
+
+        // Mode Selection Handlers
+        countBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                countBtns.forEach(b => {
+                    b.classList.remove('active', 'border-amber-600', 'bg-amber-50', 'dark:bg-amber-950/40', 'text-amber-900', 'dark:text-amber-200');
+                    b.classList.add('border-slate-200', 'dark:border-zinc-700', 'bg-white', 'dark:bg-zinc-800', 'text-slate-700', 'dark:text-zinc-300');
+                });
+                btn.classList.add('active', 'border-amber-600', 'bg-amber-50', 'dark:bg-amber-950/40', 'text-amber-900', 'dark:text-amber-200');
+                btn.classList.remove('border-slate-200', 'dark:border-zinc-700', 'bg-white', 'dark:bg-zinc-800', 'text-slate-700', 'dark:text-zinc-300');
+                selectedCount = btn.dataset.count;
+            });
+        });
+
+        typeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                typeBtns.forEach(b => {
+                    b.classList.remove('active', 'border-amber-600', 'bg-amber-50', 'dark:bg-amber-950/40', 'text-amber-900', 'dark:text-amber-200');
+                    b.classList.add('border-slate-200', 'dark:border-zinc-700', 'bg-white', 'dark:bg-zinc-800', 'text-slate-700', 'dark:text-zinc-300');
+                });
+                btn.classList.add('active', 'border-amber-600', 'bg-amber-50', 'dark:bg-amber-950/40', 'text-amber-900', 'dark:text-amber-200');
+                btn.classList.remove('border-slate-200', 'dark:border-zinc-700', 'bg-white', 'dark:bg-zinc-800', 'text-slate-700', 'dark:text-zinc-300');
+                selectedType = btn.dataset.type;
+            });
+        });
+
+        // Helper: Shuffle Array
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Start Game
+        startBtn.addEventListener('click', initQuiz);
+        restartBtn.addEventListener('click', () => {
+            resultScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        });
+
+        function initQuiz() {
+            let list = shuffle(quizDatabase);
+            if (selectedCount === '10') {
+                currentQuestions = list.slice(0, 10);
+            } else {
+                currentQuestions = list;
+            }
+
+            currentIndex = 0;
+            score = 0;
+            isAnswered = false;
+
+            startScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            isAnswered = false;
+            feedbackBox.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            textAnswerInput.value = '';
+
+            const q = currentQuestions[currentIndex];
+
+            // Progress Header
+            questionNumberEl.textContent = `第 ${currentIndex + 1} 問 / 全 ${currentQuestions.length} 問`;
+            scoreLiveEl.textContent = `正解数: ${score}`;
+            const progressPercent = ((currentIndex) / currentQuestions.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            categoryEl.textContent = q.cat || "歴史用語";
+            questionTextEl.textContent = q.q;
+
+            if (selectedType === 'choice') {
+                choiceContainer.classList.remove('hidden');
+                inputContainer.classList.add('hidden');
+                choiceContainer.innerHTML = '';
+
+                // Prepare 4 choices
+                let opts = shuffle(q.options);
+                opts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "option-btn w-full text-left p-4 rounded-xl border-2 border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 font-medium hover:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition flex items-center justify-between";
+                    btn.innerHTML = `<span>${opt}</span><i class="fa-regular fa-circle text-slate-300 dark:text-zinc-600"></i>`;
+                    btn.addEventListener('click', () => checkChoiceAnswer(opt, btn));
+                    choiceContainer.appendChild(btn);
+                });
+            } else {
+                choiceContainer.classList.add('hidden');
+                inputContainer.classList.remove('hidden');
+                textAnswerInput.focus();
+            }
+        }
+
+        // Check Answer: Choice Mode
+        function checkChoiceAnswer(userChoice, selectedBtn) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const q = currentQuestions[currentIndex];
+            const isCorrect = (userChoice === q.a);
+
+            const allChoiceBtns = choiceContainer.querySelectorAll('.option-btn');
+            allChoiceBtns.forEach(btn => {
+                btn.disabled = true;
+                const text = btn.querySelector('span').textContent;
+                if (text === q.a) {
+                    btn.classList.remove('border-slate-200', 'dark:border-zinc-700', 'bg-white', 'dark:bg-zinc-800');
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'text-emerald-900', 'dark:text-emerald-200');
+                    btn.querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400";
+                } else if (btn === selectedBtn && !isCorrect) {
+                    btn.classList.remove('border-slate-200', 'dark:border-zinc-700', 'bg-white', 'dark:bg-zinc-800');
+                    btn.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40', 'text-rose-900', 'dark:text-rose-200');
+                    btn.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-600 dark:text-rose-400";
+                }
+            });
+
+            handleFeedback(isCorrect, q);
+        }
+
+        // Check Answer: Input Mode
+        submitInputBtn.addEventListener('click', handleInputCheck);
+        textAnswerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleInputCheck();
+        });
+
+        function handleInputCheck() {
+            if (isAnswered) return;
+            const userVal = textAnswerInput.value.trim().toLowerCase();
+            if (!userVal) return;
+
+            isAnswered = true;
+            const q = currentQuestions[currentIndex];
+
+            // Match Kanji or Kana
+            const isCorrect = (userVal === q.a.toLowerCase() || userVal === q.kana.toLowerCase());
+            
+            textAnswerInput.disabled = true;
+            submitInputBtn.disabled = true;
+
+            handleFeedback(isCorrect, q);
+        }
+
+        // Display Feedback
+        function handleFeedback(isCorrect, q) {
+            if (isCorrect) {
+                score++;
+                scoreLiveEl.textContent = `正解数: ${score}`;
+                feedbackBox.className = "rounded-xl p-4 mb-6 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700/50 text-emerald-900 dark:text-emerald-200";
+                feedbackIconContainer.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i>`;
+                feedbackResult.textContent = "正解！";
+                correctAnswerDisplay.textContent = "";
+            } else {
+                feedbackBox.className = "rounded-xl p-4 mb-6 bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-700/50 text-rose-900 dark:text-rose-200";
+                feedbackIconContainer.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 dark:text-rose-400"></i>`;
+                feedbackResult.textContent = "不正解...";
+                correctAnswerDisplay.textContent = `正解: ${q.a} (${q.kana})`;
+            }
+
+            explanationText.textContent = q.exp;
+            feedbackBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        // Next Question Button
+        nextBtn.addEventListener('click', () => {
+            currentIndex++;
+            if (currentIndex < currentQuestions.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        // Show Final Score
+        function showResult() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            const total = currentQuestions.length;
+            const percent = Math.round((score / total) * 100);
+
+            finalScoreEl.textContent = score;
+            finalTotalEl.textContent = total;
+            scorePercentageEl.textContent = `正解率 ${percent}%`;
+
+            let comment = "";
+            if (percent === 100) {
+                comment = "パーフェクト！中世ヨーロッパマスターです！";
+            } else if (percent >= 80) {
+                comment = "素晴らしい成績です！完璧まであと一歩！";
+            } else if (percent >= 60) {
+                comment = "合格点です！間違えた用語をよく復習しましょう。";
+            } else {
+                comment = "もう一度プリントを見直して挑戦してみましょう！";
+            }
+            scoreCommentEl.textContent = comment;
+        }
+    </script>
+</body>
+</html>
